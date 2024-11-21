@@ -1,20 +1,79 @@
-
+<div>
+  <div class="collapse collapse-open bg-blue-200 border shadow-xl data">
+  <form [formGroup]="data" (ngSubmit)="start(data.value)">
+    <div class="columns-1 md:columns-5 gap-2 bg-blue-200 p-4">
+      <label class="form-control w-full max-w-xs">
+        <div class="label">
+          <span class="label-text">coupling</span>
+        </div>
+        <input
+          type="number"
+          class="input input-bordered w-full max-w-xs"
+          formControlName="coupling"
+          [readonly]="running"
+          min="0"
+          max="1"
+          step="0.01"
+        />
+      </label>
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">row</span>
+          </div>
+          <input
+            type="number"
+            class="input input-bordered w-full max-w-xs"
+            formControlName="row"
+            [readonly]="running"
+            min="1"
+          />
+        </label>
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">column</span>
+          </div>
+          <input
+            type="number"
+            class="input input-bordered w-full max-w-xs"
+            formControlName="column"
+            [readonly]="running"
+            min="1"
+          />
+        </label>
+          <label class="form-control w-full max-w-xs">
+            <div class="label">
+              <span class="label-text">Updatetime (ms)</span>
+            </div>
+            <input
+              type="number"
+              class="input input-bordered w-full max-w-xs"
+              formControlName="updateTime"
+              [readonly]="running"
+              min="1"
+            />
+          </label>
 <button
-      class="btn btn-md bg-gray-500 text-white"
-      type="button"
-      (click)="start()"
+      class="btn btn-md bg-gray-500 text-white float-right"
+      [disabled]="running"
     >
       start
     </button>
-    
-<button
-class="btn btn-md bg-gray-500 text-white"
+    <button
+class="btn btn-md bg-gray-500 text-white float-right"
 type="button"
 (click)="stop()"
+[disabled]="!running"
 >
 stop
 </button>
-    <div class="grid-container">
+    </div>
+  </form>
+  </div>
+  </div>
+  <div class="collapse collapse-open bg-blue-200 border shadow-xl data">
+    <div class="grid-container"
+    [style.gridTemplateColumns]="'repeat(' + data.value.column + ', 1fr)'"
+    [style.gridTemplateRows]="'repeat(' + data.value.row + ', 1fr)'">
       @for (flies of fireflies; track $index) {
         @for (opt of flies; track $index) {
       <div class="grid-item">
@@ -30,3 +89,4 @@ stop
     }
     }
     </div>
+  </div>

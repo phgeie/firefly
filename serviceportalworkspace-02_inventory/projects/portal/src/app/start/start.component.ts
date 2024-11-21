@@ -1,13 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import { interval, Subscription } from 'rxjs';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '../services/api.service';import {
+  FormGroup,
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-start',
   standalone: true,
-  imports: [
-  ],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './start.component.html',
   styleUrl: './start.component.scss'
 })
@@ -20,33 +24,28 @@ export class StartComponent implements OnDestroy{
 // Initialisiere das Array mit der Größe 10
   private subscription!: Subscription;
   fireflies: any[][] = [];
-  phase: number[][] = [[1,1,1,1,1,1,1,1,1,1],
-  [1,1,1,1,1,1,1,1,1,1],
-  [1,1,1,1,1,1,1,1,1,1],
-  [1,1,1,1,1,1,1,1,1,1],
-  [1,1,1,1,1,1,1,1,1,1],
-  [1,1,1,1,1,1,1,1,1,1],
-  [1,1,1,1,1,1,1,1,1,1],
-  [1,1,1,1,1,1,1,1,1,1],
-  [1,1,1,1,1,1,1,1,1,1],
-  [1,1,1,1,1,1,1,1,1,1],];
+  
   subStart: any;
   subStop: any;
-  size: number = 10;
-  coupling: number = 0.005;
-  threadSleepTime: number = 50;
+  running: boolean = false;
+  data = new FormGroup({
+    coupling: new FormControl(0.5),
+    row: new FormControl(10),
+    column: new FormControl(10),
+    updateTime: new FormControl(50)
+  });
 
-  start(): void {
-    this.subStart = this.apiService.start(this.size,this.coupling,this.threadSleepTime).subscribe(res =>
-      this.subscription = interval(this.threadSleepTime).subscribe(() => {
+  start(data: any): void {
+    this.subStart = this.apiService.start(data.row,data.column,data.coupling,data.updateTime).subscribe(res =>
+      this.subscription = interval(data.updateTime).subscribe(() => {
       this.apiService.getFireflies().subscribe(res => {this.fireflies= res;});
     }));
-    
+    this.running = true;
   }
 
   stop(): void {
     this.subStop = this.apiService.stop().subscribe(res => {console.log(res); this.ngOnDestroy();});
-    
+    this.running = false;
   }
 
   ngOnDestroy(): void {
@@ -54,4 +53,5 @@ export class StartComponent implements OnDestroy{
     this.subStart.unsubscribe();
     this.subStop.unsubscribe();
   }
+
 }

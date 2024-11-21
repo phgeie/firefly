@@ -1,28 +1,28 @@
-.bg-portal {
-  background-blend-mode: darken;
-  background-repeat: no-repeat;
-  background-color: #cccccc;
-  background-position: 50%;
-  width: 100%;
-  padding: 5%;
-}
 .scaled-image {
-  width: 400px; /* oder Prozentwerte, z.B. 50% */
-  height: 430px; /* Beibehaltung des Seitenverhältnisses */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 16px; /* Abstand zwischen den Elementen */
-  padding: 16px;
+  gap: 0px; /* Abstand zwischen den Elementen */
 }
 
 .grid-item {
-  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 400px; /* Höhe entspricht der Breite für ein quadratisches Grid */
   font-size: 1.5rem;
+}
+
+button {
+  margin: 5px;
+  background-color: darkblue;
+}
+
+.data {
+  margin-top: 2%;
+  margin-left: 2%;
+  width: 96%;
 }

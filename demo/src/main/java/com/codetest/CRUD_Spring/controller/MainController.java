@@ -15,17 +15,19 @@ import com.codetest.CRUD_Spring.service.*;
 @RestController // This means that this class is a Controller
 @RequestMapping(path="/data") // This means URL's start with /data (after Application path)
 public class MainController {
-    private int size;
+    private int row;
+    private int column;
     private Torus torus;
 
     @GetMapping(path="/start")
-    public int start(@RequestParam int size, @RequestParam double coupling, @RequestParam int threadSleepTime) {
-        this.size = size;
+    public int start(@RequestParam int row, @RequestParam int column, @RequestParam double coupling, @RequestParam int threadSleepTime) {
+        this.row = row;
+        this.column = column;
         System.out.println("Fireflies woke up!");
-        torus = new Torus(size,coupling, threadSleepTime);
+        torus = new Torus(row, column,coupling, threadSleepTime);
         Firefly[][] ff = torus.getGrid();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
                 ff[i][j].start();
             }
         }
@@ -37,8 +39,8 @@ public class MainController {
         System.out.println("Fireflies went to sleep!");
         if (torus != null) {
             Firefly[][] ff = torus.getGrid();
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
+            for (int i = 0; i < row; i++) {
+                for (int j = 0; j < column; j++) {
                     ff[i][j].interrupt();
                 }
             }
@@ -49,11 +51,11 @@ public class MainController {
 
     @GetMapping(path="/getFireflies")
     public double[][] getFireflies(){
-        double[][] phases = new double[size][size];
+        double[][] phases = new double[row][column];
         if (torus != null) {
             Firefly[][] ff = torus.getGrid();
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
+            for (int i = 0; i < row; i++) {
+                for (int j = 0; j < column; j++) {
                     phases[i][j] = ff[i][j].getPhase();
                 }
             }

@@ -10,8 +10,8 @@ export const BASE_URI: string = 'http://localhost:8080/data';
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
-  start(size: number, coupling: number, threadSleepTime: number) {
-    return this.httpClient.get(BASE_URI + '/start?size='+size+'&coupling='+coupling+'&threadSleepTime='+threadSleepTime);
+  start(row: number, column: number, coupling: number, threadSleepTime: number) {
+    return this.httpClient.get(BASE_URI + '/start?row='+row+'&column='+column+'&coupling='+coupling+'&threadSleepTime='+threadSleepTime);
   }
 
   stop() {
