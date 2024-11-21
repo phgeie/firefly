@@ -1,0 +1,32 @@
+
+<button
+      class="btn btn-md bg-gray-500 text-white"
+      type="button"
+      (click)="start()"
+    >
+      start
+    </button>
+    
+<button
+class="btn btn-md bg-gray-500 text-white"
+type="button"
+(click)="stop()"
+>
+stop
+</button>
+    <div class="grid-container">
+      @for (flies of fireflies; track $index) {
+        @for (opt of flies; track $index) {
+      <div class="grid-item">
+        @if (opt > 3.14){
+          <img src="assets/img/firefly_light.svg" class="scaled-image">
+          
+        }@else {
+          <img src="assets/img/firefly_dark.svg" class="scaled-image">
+          
+        }
+          
+      </div>
+    }
+    }
+    </div>
