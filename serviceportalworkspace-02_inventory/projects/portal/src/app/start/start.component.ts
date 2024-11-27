@@ -31,7 +31,7 @@ export class StartComponent implements OnDestroy{
   data = new FormGroup({
     coupling: new FormControl(0.5),
     row: new FormControl(10),
-    column: new FormControl(10),
+    column: new FormControl(25),
     updateTime: new FormControl(50)
   });
 
