@@ -28,6 +28,8 @@ export class StartComponent implements OnDestroy{
   subStart: any;
   subStop: any;
   running: boolean = false;
+  
+  zoomLevel: number = 1;
   data = new FormGroup({
     coupling: new FormControl(0.5),
     row: new FormControl(10),
@@ -46,6 +48,15 @@ export class StartComponent implements OnDestroy{
   stop(): void {
     this.subStop = this.apiService.stop().subscribe(res => {console.log(res); this.ngOnDestroy();});
     this.running = false;
+  }
+
+  
+  zoomIn() {
+    this.zoomLevel = Math.min(this.zoomLevel + 0.1, 3); // Maximal 300%
+  }
+
+  zoomOut() {
+    this.zoomLevel = Math.max(this.zoomLevel - 0.1, 0.1); // Minimal 10%
   }
 
   ngOnDestroy(): void {
