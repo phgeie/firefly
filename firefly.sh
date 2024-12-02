@@ -9,21 +9,21 @@ echo -e "${GREEN}Starte Firefly Build und Start Skript...${NC}"
 
 # Schritt 1: Maven Build für Spring Boot
 echo -e "${GREEN}Baue Spring Boot Anwendung mit Maven...${NC}"
-(cd demo && mvn clean install) || { echo -e "${RED}Maven Build fehlgeschlagen.${NC}"; exit 1; }
+(cd Spring-Boot-Server && mvn clean install) || { echo -e "${RED}Maven Build fehlgeschlagen.${NC}"; exit 1; }
 
 # Schritt 2: Angular-Abhängigkeiten installieren
 echo -e "${GREEN}Installiere Angular-Abhängigkeiten...${NC}"
-(cd serviceportalworkspace-02_inventory && npm install && npm install --save-dev @angular-devkit/build-angular) || { echo -e "${RED}NPM Install fehlgeschlagen.${NC}"; exit 1; }
+(cd Angular && npm install && npm install --save-dev @angular-devkit/build-angular) || { echo -e "${RED}NPM Install fehlgeschlagen.${NC}"; exit 1; }
 
 # Schritt 3: Spring Boot Anwendung starten
 echo -e "${GREEN}Starte Spring Boot Anwendung...${NC}"
-(cd demo && mvn spring-boot:run) &
+(cd Spring-Boot-Server && mvn spring-boot:run) &
 SPRING_PID=$!
 echo -e "${GREEN}Spring Boot läuft (PID: $SPRING_PID).${NC}"
 
 # Schritt 4: Angular-Anwendung starten
 echo -e "${GREEN}Starte Angular-Anwendung...${NC}"
-(cd serviceportalworkspace-02_inventory && ng serve Firefly) &
+(cd Angular && ng serve Firefly) &
 ANGULAR_PID=$!
 echo -e "${GREEN}Angular läuft (PID: $ANGULAR_PID).${NC}"
 
