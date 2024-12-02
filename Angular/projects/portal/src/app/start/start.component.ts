@@ -46,7 +46,7 @@ export class StartComponent implements OnDestroy{
   }
 
   stop(): void {
-    this.subStop = this.apiService.stop().subscribe(res => {console.log(res); this.ngOnDestroy();});
+    this.subStop = this.apiService.stop().subscribe(res => { this.ngOnDestroy();});
     this.running = false;
   }
 
